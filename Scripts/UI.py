@@ -1,3 +1,5 @@
+DB_PATH = "yelp_demo.db"
+
 import streamlit as st
 import sqlite3
 import pandas as pd
@@ -21,7 +23,7 @@ st.caption("Data Ingestion & Processing Pipeline")
 # -------------------- DB Helpers --------------------
 @st.cache_resource
 def get_connection():
-    return sqlite3.connect("yelp.db", check_same_thread=False)
+    return sqlite3.connect(DB_PATH, check_same_thread=False)
 
 
 def get_business_id(cursor, zipcode, business_name):
@@ -39,7 +41,10 @@ def get_business_id(cursor, zipcode, business_name):
 
 def load_reviews(conn, business_id):
     query = """
-        SELECT Review, Stars, "True(1)/Deceptive(0)" AS label
+        SELECT 
+            Review, 
+            Stars, 
+            authenticity_label AS label
         FROM predicted_reviews
         WHERE business_id = ?
     """
@@ -53,7 +58,7 @@ def change_label(stars):
 
 def fake_ratio(df):
     total = len(df)
-    fake = (df["label"] == "False").sum()
+    fake = (df["label"] == 0).sum()
     return fake / total if total > 0 else 0
 
 
