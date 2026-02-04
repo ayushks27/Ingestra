@@ -12,21 +12,45 @@ Project Overview
 
 The project focuses on scalability, reproducibility, and clean architecture, following real-world data engineering best practices.
 
-Architecture:
+Architecture
 
-    Raw Data Sources (CSV / Large Files)
-            |
-            |  (Cleaning & Normalization)
-            v
-    Data Processing Scripts (Python)
-            |
-            |  (Chunked Ingestion)
-            v
-    Relational Database (SQLite)
-            |
-            |  (Analytical Queries)
-            v
-    Streamlit UI (Insights & Visualization)
+    ```mermaid
+    flowchart TD
+        A[Raw Data Sources<br/>(CSV / Large Files)]
+        A -->|Cleaning & Normalization| B[Data Processing Scripts<br/>(Python)]
+        B -->|Chunked Ingestion| C[(Relational Database<br/>SQLite)]
+        C -->|Analytical Queries| D[Streamlit UI<br/>(Insights & Visualization)]
+
+Data Model
+
+    erDiagram
+        BUSINESS {
+            string b_id PK
+            string name
+            string postal_code
+        }
+    
+        PREDICTED_REVIEWS {
+            string business_id FK
+            string Review
+            float Stars
+            int Authenticity_Label
+        }
+    
+        BUSINESS ||--o{ PREDICTED_REVIEWS : has
+
+Ingestion Workflow
+
+    sequenceDiagram
+        participant CSV as Large CSV File
+        participant Script as Ingestion Script
+        participant DB as SQLite Database
+    
+        CSV->>Script: Read chunk (200k rows)
+        Script->>Script: Validate & select columns
+        Script->>DB: Insert batch
+        Script->>CSV: Read next chunk
+        Script->>DB: Insert batch
 
 Repository Structure
 
