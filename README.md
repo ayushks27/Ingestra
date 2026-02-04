@@ -147,6 +147,33 @@ Key Engineering Decisions
 
 Reproducible pipelines over committing raw data
 
+Deployment
+
+    - The Streamlit application is deployed using a lightweight demo database for visualization.
+    - Large-scale ingestion and full datasets are intentionally excluded from deployment and are handled via local or cloud-based ingestion pipelines.
+
+🔗 **Live App**: https://ingestra-r2kg3ympsfqguhundbbyod.streamlit.app/#ingestra
+
+Demo Inputs
+
+    - **Zipcode:** `226021`
+    - **Restaurant:** `Demo Cafe`
+
+Demo Notes
+
+    - The demo uses a **small, curated SQLite database (`yelp_demo.db`)**
+    - Heavy ingestion and model training pipelines are intentionally excluded from deployment
+    - This ensures fast startup, reproducibility, and stable execution in a cloud environment
+
+Known Demo Limitations
+
+    - The demo dataset is intentionally small
+    - Phrase-level ML analysis is skipped when data is insufficient
+    - This behavior is **by design** and mirrors production-grade guardrails
+
+The full ingestion, cleaning, and model-training pipelines are available in the repository
+for local execution and architectural reference.
+
 What This Project Demonstrates
 
     - Real-world data ingestion patterns
@@ -162,13 +189,7 @@ Future Improvements
     - Introduce orchestration (Airflow)
     - Add automated tests for ingestion scripts
     - Support cloud storage (S3-style ingestion)
-
-Deployment
-
-    - The Streamlit application is deployed using a lightweight demo database for visualization.
-    - Large-scale ingestion and full datasets are intentionally excluded from deployment and are handled via local or cloud-based ingestion pipelines.
-
-
+    
 Author
 
     Purnendu Raghav Srivastava
