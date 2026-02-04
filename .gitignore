@@ -1,0 +1,44 @@
+# ------------------------------
+# Large data files (DO NOT COMMIT)
+# ------------------------------
+data/
+*.csv
+*.tsv
+*.parquet
+*.pdf
+*.zip
+*.gz
+
+# ------------------------------
+# Local large data directories
+# ------------------------------
+data_downloads/
+big_data/
+raw_data/
+
+# ------------------------------
+# Databases
+# ------------------------------
+*.db
+*.sqlite
+*.sqlite3
+
+# ------------------------------
+# Python cache / env
+# ------------------------------
+__pycache__/
+*.pyc
+.conda/
+.env
+
+# ------------------------------
+# Jupyter
+# ------------------------------
+.ipynb_checkpoints/
+
+# ------------------------------
+# OS / Editor
+# ------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
