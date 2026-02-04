@@ -105,28 +105,46 @@ def bigram_analysis(df):
 
 
 # -------------------- UI --------------------
-zipcode = st.text_input("Enter Zipcode", value="226021")
-business_name = st.text_input("Enter Restaurant Name", value="Demo Cafe")
+def bigram_analysis(df):
+    # Only authentic reviews
+    df = df[df["label"] == 1]
 
-if st.button("Analyze"):
-    conn = get_connection()
-    cursor = conn.cursor()
+    # Guard: empty or too small
+    if df.empty or df["Review"].nunique() < 2:
+        return None
 
-    business_id = get_business_id(cursor, zipcode, business_name)
+    labels = change_label(df["Stars"].tolist())
 
-    if not business_id:
-        st.error("Business not found. Try: 226021 / Demo Cafe")
-    else:
-        df = load_reviews(conn, business_id)
+    if len(set(labels)) < 2:
+        return None
 
-        st.metric(
-            "Fake Review Ratio",
-            f"{fake_ratio(df):.2%}"
-        )
+    vectorizer = TfidfVectorizer(
+        stop_words="english",
+        ngram_range=(2, 2),
+        min_df=1
+    )
 
-        fig = bigram_analysis(df)
+    try:
+        X = vectorizer.fit_transform(df["Review"])
+    except ValueError:
+        return None
 
-        if fig is None:
-            st.info("Not enough authentic reviews to perform phrase analysis.")
-        else:
-            st.pyplot(fig)
+    clf = LinearSVC()
+    clf.fit(X, labels)
+
+    coef = clf.coef_.ravel()
+    top_pos = np.argsort(coef)[-5:]
+    top_neg = np.argsort(coef)[:5]
+    idx = np.hstack([top_neg, top_pos])
+
+    features = np.array(vectorizer.get_feature_names_out())
+
+    plt.figure(figsize=(8, 4))
+    colors = ["red" if c < 0 else "blue" for c in coef[idx]]
+    plt.bar(range(len(idx)), coef[idx], color=colors)
+    plt.xticks(range(len(idx)), features[idx], rotation=45, ha="right")
+    plt.title("Key Phrases Influencing Ratings")
+    plt.tight_layout()
+
+    return plt
+
