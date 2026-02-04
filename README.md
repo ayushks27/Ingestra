@@ -4,12 +4,11 @@ Ingestra is an end-to-end data ingestion and processing pipeline designed to tra
 
 Project Overview
 
-    Ingestra demonstrates a production-style data engineering workflow, including:
-    Batch ingestion of large datasets (1+ GB) using chunked processing
-    Schema normalization and data cleaning
-    Relational data modeling using SQLite
-    Separation of ingestion, storage, and consumption layers
-    Interactive analytics via a Streamlit-based UI
+    - Batch ingestion of large datasets (1+ GB) using chunked processing
+    - Schema normalization and data cleaning
+    - Relational data modeling using SQLite
+    - Separation of ingestion, storage, and consumption layers
+    - Interactive analytics via a Streamlit-based UI
 
 The project focuses on scalability, reproducibility, and clean architecture, following real-world data engineering best practices.
 
@@ -52,11 +51,11 @@ Note: Large datasets and database files are intentionally excluded from version 
 
 Technologies Used
 
-    Python (pandas, numpy, sqlite3)
-    SQLite (analytical storage)
-    Streamlit (data visualization & UI)
-    scikit-learn (text feature extraction & modeling)
-    Git (version control)
+    - Python (pandas, numpy, sqlite3)
+    - SQLite (analytical storage)
+    - Streamlit (data visualization & UI)
+    - scikit-learn (text feature extraction & modeling)
+    - Git (version control)
 
 Data Model
 
@@ -110,35 +109,35 @@ Then open:
 
 UI Features
 
-    Input business name and zipcode
-    Compute fake review ratio
-    Analyze key phrases influencing ratings
-    Visualize insights interactively
+    - Input business name and zipcode
+    - Compute fake review ratio
+    - Analyze key phrases influencing ratings
+    - Visualize insights interactively
 
 Key Engineering Decisions
 
-    Chunked ingestion to handle large datasets safely
-    Schema normalization before loading into the database
-    Database-backed querying instead of loading raw files in the UI
-    Separation of concerns between ingestion, storage, and visualization
+    - Chunked ingestion to handle large datasets safely
+    - Schema normalization before loading into the database
+    - Database-backed querying instead of loading raw files in the UI
+    - Separation of concerns between ingestion, storage, and visualization
 
 Reproducible pipelines over committing raw data
 
 What This Project Demonstrates
 
-    Real-world data ingestion patterns
-    Handling of large datasets with limited memory
-    Clean relational modeling for analytics
-    Transition from notebooks to production scripts
-    End-to-end ownership of a data pipeline
+    - Real-world data ingestion patterns
+    - Handling of large datasets with limited memory
+    - Clean relational modeling for analytics
+    - Transition from notebooks to production scripts
+    - End-to-end ownership of a data pipeline
 
 Future Improvements
 
-    Replace SQLite with PostgreSQL / Redshift
-    Add data quality checks & logging
-    Introduce orchestration (Airflow)
-    Add automated tests for ingestion scripts
-    Support cloud storage (S3-style ingestion)
+    - Replace SQLite with PostgreSQL / Redshift
+    - Add data quality checks & logging
+    - Introduce orchestration (Airflow)
+    - Add automated tests for ingestion scripts
+    - Support cloud storage (S3-style ingestion)
 
 Author
 
