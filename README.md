@@ -61,11 +61,11 @@ Repository Structure
     │   ├── ingest_predicted_reviews.py # Chunked ingestion of large datasets
     │   ├── UI.py                       # Streamlit analytics application
     │   ├── Clean_income_zipcode_data.py
-    │   └── other processing scripts
+    │   └── create_demo_db.py           # Generates demo database
     │
     ├── data/                           # (Ignored) Raw and reference datasets
     │
-    ├── notebooks/                      # Exploration & experimentation (optional)
+    ├── yelp_demo.db                    # Demo database
     │
     ├── .gitignore                      # Excludes large files & generated artifacts
     ├── requirements.txt
