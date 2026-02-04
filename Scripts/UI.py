@@ -1,3 +1,4 @@
+# -------------------- Config --------------------
 DB_PATH = "yelp_demo.db"
 
 import streamlit as st
@@ -20,7 +21,7 @@ st.title("Ingestra")
 st.caption("Data Ingestion & Processing Pipeline")
 
 
-# -------------------- DB Helpers --------------------
+# -------------------- Database Helpers --------------------
 @st.cache_resource
 def get_connection():
     return sqlite3.connect(DB_PATH, check_same_thread=False)
@@ -42,8 +43,8 @@ def get_business_id(cursor, zipcode, business_name):
 def load_reviews(conn, business_id):
     query = """
         SELECT 
-            Review, 
-            Stars, 
+            Review,
+            Stars,
             authenticity_label AS label
         FROM predicted_reviews
         WHERE business_id = ?
@@ -63,9 +64,10 @@ def fake_ratio(df):
 
 
 def bigram_analysis(df):
+    # Only use authentic reviews
     df = df[df["label"] == 1]
 
-    # Safety checks for small demo data
+    # Guard against small / empty demo data
     if df.empty or df["Review"].nunique() < 2:
         return None
 
@@ -103,8 +105,8 @@ def bigram_analysis(df):
 
 
 # -------------------- UI --------------------
-zipcode = st.text_input("Enter Zipcode")
-business_name = st.text_input("Enter Restaurant Name")
+zipcode = st.text_input("Enter Zipcode", value="226021")
+business_name = st.text_input("Enter Restaurant Name", value="Demo Cafe")
 
 if st.button("Analyze"):
     conn = get_connection()
@@ -113,7 +115,7 @@ if st.button("Analyze"):
     business_id = get_business_id(cursor, zipcode, business_name)
 
     if not business_id:
-        st.error("Business not found.")
+        st.error("Business not found. Try: 226021 / Demo Cafe")
     else:
         df = load_reviews(conn, business_id)
 
@@ -128,4 +130,3 @@ if st.button("Analyze"):
             st.info("Not enough authentic reviews to perform phrase analysis.")
         else:
             st.pyplot(fig)
-
