@@ -63,6 +63,12 @@ def fake_ratio(df):
     return fake / total if total > 0 else 0
 
 
+def average_ratings(df):
+    overall_avg = df["Stars"].mean()
+    authentic_avg = df[df["label"] == 1]["Stars"].mean()
+    return overall_avg, authentic_avg
+
+
 def bigram_analysis(df):
     # Only authentic reviews
     df = df[df["label"] == 1]
@@ -136,11 +142,27 @@ if analyze:
     else:
         df = load_reviews(conn, business_id)
 
-        st.metric(
+        # ---- Metrics ----
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric(
             "Fake Review Ratio",
             f"{fake_ratio(df):.2%}"
         )
 
+        overall_avg, authentic_avg = average_ratings(df)
+
+        col2.metric(
+            "Avg Rating (All)",
+            f"{overall_avg:.2f}" if not np.isnan(overall_avg) else "N/A"
+        )
+
+        col3.metric(
+            "Avg Rating (Authentic)",
+            f"{authentic_avg:.2f}" if not np.isnan(authentic_avg) else "N/A"
+        )
+
+        # ---- Bigram Analysis ----
         fig = bigram_analysis(df)
 
         if fig is None:
