@@ -23,6 +23,9 @@ raw_data/
 *.sqlite
 *.sqlite3
 
+# Allow demo database for deployment
+!yelp_demo.db
+
 # ------------------------------
 # Python cache / env
 # ------------------------------
