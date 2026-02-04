@@ -141,6 +141,5 @@ Future Improvements
 
 Author
 
-Purnendu Raghav Srivastava
-
-Data Engineering & Analytics Enthusiast
+    Purnendu Raghav Srivastava
+    Data Engineering & Analytics Enthusiast
