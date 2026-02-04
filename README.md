@@ -163,6 +163,12 @@ Future Improvements
     - Add automated tests for ingestion scripts
     - Support cloud storage (S3-style ingestion)
 
+Deployment
+
+    - The Streamlit application is deployed using a lightweight demo database for visualization.
+    - Large-scale ingestion and full datasets are intentionally excluded from deployment and are handled via local or cloud-based ingestion pipelines.
+
+
 Author
 
     Purnendu Raghav Srivastava
