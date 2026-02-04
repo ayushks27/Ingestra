@@ -2,7 +2,7 @@ Ingestra
 
 Ingestra is an end-to-end data ingestion and processing pipeline designed to transform raw, large-scale review data into analytics-ready datasets, enabling efficient querying and visualization through a lightweight application layer.
 
-🚀 Project Overview
+Project Overview
 
     Ingestra demonstrates a production-style data engineering workflow, including:
     Batch ingestion of large datasets (1+ GB) using chunked processing
@@ -29,7 +29,7 @@ Architecture:
             v
     Streamlit UI (Insights & Visualization)
 
-📂 Repository Structure
+Repository Structure
 
     Ingestra/
     │
@@ -50,15 +50,15 @@ Architecture:
 
 Note: Large datasets and database files are intentionally excluded from version control.
 
-⚙️ Technologies Used
+Technologies Used
 
-Python (pandas, numpy, sqlite3)
-SQLite (analytical storage)
-Streamlit (data visualization & UI)
-scikit-learn (text feature extraction & modeling)
-Git (version control)
+    Python (pandas, numpy, sqlite3)
+    SQLite (analytical storage)
+    Streamlit (data visualization & UI)
+    scikit-learn (text feature extraction & modeling)
+    Git (version control)
 
-🧩 Data Model
+Data Model
 
     business(Dimension Table)
     Column	       Description
@@ -73,7 +73,7 @@ Git (version control)
     Stars	                Rating score
     True(1)/Deceptive(0)	Review authenticity label
 
-🛠️ Setup & Installation
+Setup & Installation
 
 Clone the repository
 
@@ -86,7 +86,7 @@ Create and activate environment
     conda activate ingestra
     pip install -r requirements.txt
 
-📥 Data Ingestion Workflow
+Data Ingestion Workflow
 
     Step 1: Initialize the database
     Creates schema and loads business metadata.
@@ -98,7 +98,7 @@ Create and activate environment
 
 This script is designed to handle datasets >1 GB efficiently.
 
-📊 Run the Application
+Run the Application
 
 Launch the Streamlit UI: 
 
@@ -115,7 +115,7 @@ UI Features
     Analyze key phrases influencing ratings
     Visualize insights interactively
 
-🧠 Key Engineering Decisions
+Key Engineering Decisions
 
     Chunked ingestion to handle large datasets safely
     Schema normalization before loading into the database
@@ -124,7 +124,7 @@ UI Features
 
 Reproducible pipelines over committing raw data
 
-📌 What This Project Demonstrates
+What This Project Demonstrates
 
     Real-world data ingestion patterns
     Handling of large datasets with limited memory
@@ -132,7 +132,7 @@ Reproducible pipelines over committing raw data
     Transition from notebooks to production scripts
     End-to-end ownership of a data pipeline
 
-🚧 Future Improvements
+Future Improvements
 
     Replace SQLite with PostgreSQL / Redshift
     Add data quality checks & logging
@@ -140,7 +140,7 @@ Reproducible pipelines over committing raw data
     Add automated tests for ingestion scripts
     Support cloud storage (S3-style ingestion)
 
-👤 Author
+Author
 
 Purnendu Raghav Srivastava
 Data Engineering & Analytics Enthusiast
