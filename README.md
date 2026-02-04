@@ -4,11 +4,11 @@ Ingestra is an end-to-end data ingestion and processing pipeline designed to tra
 
 Project Overview
 
-    - Batch ingestion of large datasets (1+ GB) using chunked processing
-    - Schema normalization and data cleaning
-    - Relational data modeling using SQLite
-    - Separation of ingestion, storage, and consumption layers
-    - Interactive analytics via a Streamlit-based UI
+- Batch ingestion of large datasets (1+ GB) using chunked processing
+- Schema normalization and data cleaning
+- Relational data modeling using SQLite
+- Separation of ingestion, storage, and consumption layers
+- Interactive analytics via a Streamlit-based UI
 
 The project focuses on scalability, reproducibility, and clean architecture, following real-world data engineering best practices.
 
@@ -75,24 +75,26 @@ Note: Large datasets and database files are intentionally excluded from version 
 
 Technologies Used
 
-    - Python (pandas, numpy, sqlite3)
-    - SQLite (analytical storage)
-    - Streamlit (data visualization & UI)
-    - scikit-learn (text feature extraction & modeling)
-    - Git (version control)
+- Python (pandas, numpy, sqlite3)
+- SQLite (analytical storage)
+- Streamlit (data visualization & UI)
+- scikit-learn (text feature extraction & modeling)
+- Git (version control)
 
 Data Model
 
-    business(Dimension Table)
-    Column	       Description
+business(Dimension Table)
+
+    Column	         Description
     b_id	         Unique business identifier
     name	         Business name
-    postal_code	   Zip code
+    postal_code	     Zip code
 
-    predicted_reviews (Fact Table)
-    Column	              Description
-    business_id	          Foreign key to business table
-    Review	              Review text
+predicted_reviews (Fact Table)
+
+    Column	                Description
+    business_id	            Foreign key to business table
+    Review	                Review text
     Stars	                Rating score
     True(1)/Deceptive(0)	Review authenticity label
 
@@ -111,12 +113,14 @@ Create and activate environment
 
 Data Ingestion Workflow
 
-    Step 1: Initialize the database
-    Creates schema and loads business metadata.
+Step 1: Initialize the database
+Creates schema and loads business metadata.
+
     python Scripts/setup_database.py
 
-    Step 2: Ingest large review dataset
-    Processes large CSV files using chunked ingestion to avoid memory issues.
+Step 2: Ingest large review dataset
+Processes large CSV files using chunked ingestion to avoid memory issues.
+
     python Scripts/ingest_predicted_reviews.py
 
 This script is designed to handle datasets >1 GB efficiently.
@@ -133,24 +137,24 @@ Then open:
 
 UI Features
 
-    - Input business name and zipcode
-    - Compute fake review ratio
-    - Analyze key phrases influencing ratings
-    - Visualize insights interactively
+- Input business name and zipcode
+- Compute fake review ratio
+- Analyze key phrases influencing ratings
+- Visualize insights interactively
 
 Key Engineering Decisions
 
-    - Chunked ingestion to handle large datasets safely
-    - Schema normalization before loading into the database
-    - Database-backed querying instead of loading raw files in the UI
-    - Separation of concerns between ingestion, storage, and visualization
+- Chunked ingestion to handle large datasets safely
+- Schema normalization before loading into the database
+- Database-backed querying instead of loading raw files in the UI
+- Separation of concerns between ingestion, storage, and visualization
 
 Reproducible pipelines over committing raw data
 
 Deployment
 
-    - The Streamlit application is deployed using a lightweight demo database for visualization.
-    - Large-scale ingestion and full datasets are intentionally excluded from deployment and are handled via local or cloud-based ingestion pipelines.
+- The Streamlit application is deployed using a lightweight demo database for visualization.
+- Large-scale ingestion and full datasets are intentionally excluded from deployment and are handled via local or cloud-based ingestion pipelines.
 
 🔗 **Live App**: https://ingestra-r2kg3ympsfqguhundbbyod.streamlit.app/#ingestra
 
@@ -161,36 +165,35 @@ Demo Inputs
 
 Demo Notes
 
-    - The demo uses a **small, curated SQLite database (`yelp_demo.db`)**
-    - Heavy ingestion and model training pipelines are intentionally excluded from deployment
-    - This ensures fast startup, reproducibility, and stable execution in a cloud environment
+- The demo uses a **small, curated SQLite database (`yelp_demo.db`)**
+- Heavy ingestion and model training pipelines are intentionally excluded from deployment
+- This ensures fast startup, reproducibility, and stable execution in a cloud environment
 
 Known Demo Limitations
 
-    - The demo dataset is intentionally small
-    - Phrase-level ML analysis is skipped when data is insufficient
-    - This behavior is **by design** and mirrors production-grade guardrails
+- The demo dataset is intentionally small
+- Phrase-level ML analysis is skipped when data is insufficient
+- This behavior is **by design** and mirrors production-grade guardrails
 
 The full ingestion, cleaning, and model-training pipelines are available in the repository
 for local execution and architectural reference.
 
 What This Project Demonstrates
 
-    - Real-world data ingestion patterns
-    - Handling of large datasets with limited memory
-    - Clean relational modeling for analytics
-    - Transition from notebooks to production scripts
-    - End-to-end ownership of a data pipeline
+- Real-world data ingestion patterns
+- Handling of large datasets with limited memory
+- Clean relational modeling for analytics
+- Transition from notebooks to production scripts
+- End-to-end ownership of a data pipeline
 
 Future Improvements
 
-    - Replace SQLite with PostgreSQL / Redshift
-    - Add data quality checks & logging
-    - Introduce orchestration (Airflow)
-    - Add automated tests for ingestion scripts
-    - Support cloud storage (S3-style ingestion)
+- Replace SQLite with PostgreSQL / Redshift
+- Add data quality checks & logging
+- Introduce orchestration (Airflow)
+- Add automated tests for ingestion scripts
+- Support cloud storage (S3-style ingestion)
     
 Author
 
-    Purnendu Raghav Srivastava
-    Data Engineering & Analytics Enthusiast
+Purnendu Raghav Srivastava
