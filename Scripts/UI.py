@@ -64,48 +64,6 @@ def fake_ratio(df):
 
 
 def bigram_analysis(df):
-    # Only use authentic reviews
-    df = df[df["label"] == 1]
-
-    # Guard against small / empty demo data
-    if df.empty or df["Review"].nunique() < 2:
-        return None
-
-    labels = change_label(df["Stars"].tolist())
-
-    vectorizer = TfidfVectorizer(
-        stop_words="english",
-        ngram_range=(2, 2),
-        min_df=1
-    )
-
-    try:
-        X = vectorizer.fit_transform(df["Review"])
-    except ValueError:
-        return None
-
-    clf = LinearSVC()
-    clf.fit(X, labels)
-
-    coef = clf.coef_.ravel()
-    top_pos = np.argsort(coef)[-5:]
-    top_neg = np.argsort(coef)[:5]
-    idx = np.hstack([top_neg, top_pos])
-
-    features = np.array(vectorizer.get_feature_names_out())
-
-    plt.figure(figsize=(8, 4))
-    colors = ["red" if c < 0 else "blue" for c in coef[idx]]
-    plt.bar(range(len(idx)), coef[idx], color=colors)
-    plt.xticks(range(len(idx)), features[idx], rotation=45, ha="right")
-    plt.title("Key Phrases Influencing Ratings")
-    plt.tight_layout()
-
-    return plt
-
-
-# -------------------- UI --------------------
-def bigram_analysis(df):
     # Only authentic reviews
     df = df[df["label"] == 1]
 
@@ -115,6 +73,7 @@ def bigram_analysis(df):
 
     labels = change_label(df["Stars"].tolist())
 
+    # Guard: ML needs at least 2 classes
     if len(set(labels)) < 2:
         return None
 
@@ -148,3 +107,46 @@ def bigram_analysis(df):
 
     return plt
 
+
+# -------------------- UI --------------------
+st.subheader("Analyze Reviews")
+
+zipcode = st.text_input(
+    "Enter Zipcode",
+    value="226021",
+    key="zip"
+)
+
+business_name = st.text_input(
+    "Enter Restaurant Name",
+    value="Demo Cafe",
+    key="biz"
+)
+
+analyze = st.button("Analyze", key="analyze_btn")
+
+if analyze:
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    business_id = get_business_id(cursor, zipcode, business_name)
+
+    if not business_id:
+        st.error("Business not found. Try: 226021 / Demo Cafe")
+    else:
+        df = load_reviews(conn, business_id)
+
+        st.metric(
+            "Fake Review Ratio",
+            f"{fake_ratio(df):.2%}"
+        )
+
+        fig = bigram_analysis(df)
+
+        if fig is None:
+            st.info(
+                "Not enough authentic reviews to perform phrase analysis "
+                "(demo dataset limitation)."
+            )
+        else:
+            st.pyplot(fig)
