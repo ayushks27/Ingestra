@@ -63,22 +63,31 @@ def fake_ratio(df):
 
 
 def bigram_analysis(df):
-    df = df[df["label"] == "True"]
+    df = df[df["label"] == 1]
+
+    # Safety checks for small demo data
+    if df.empty or df["Review"].nunique() < 2:
+        return None
 
     labels = change_label(df["Stars"].tolist())
 
     vectorizer = TfidfVectorizer(
         stop_words="english",
-        ngram_range=(2, 2)
+        ngram_range=(2, 2),
+        min_df=1
     )
 
-    X = vectorizer.fit_transform(df["Review"])
+    try:
+        X = vectorizer.fit_transform(df["Review"])
+    except ValueError:
+        return None
+
     clf = LinearSVC()
     clf.fit(X, labels)
 
     coef = clf.coef_.ravel()
-    top_pos = np.argsort(coef)[-10:]
-    top_neg = np.argsort(coef)[:10]
+    top_pos = np.argsort(coef)[-5:]
+    top_neg = np.argsort(coef)[:5]
     idx = np.hstack([top_neg, top_pos])
 
     features = np.array(vectorizer.get_feature_names_out())
@@ -114,4 +123,9 @@ if st.button("Analyze"):
         )
 
         fig = bigram_analysis(df)
-        st.pyplot(fig)
+
+        if fig is None:
+            st.info("Not enough authentic reviews to perform phrase analysis.")
+        else:
+            st.pyplot(fig)
+
